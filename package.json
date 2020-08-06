@@ -1,0 +1,19 @@
+{
+  "name": "shaders-experiments",
+  "version": "1.0.0",
+  "description": "Using `canvas-sketch` and `three.js`",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "new": "canvas-sketch src/sketch.js --new --open",
+    "new:three": "canvas-sketch src/sketch-three.js --new",
+    "start": "canvas-sketch src/sketch.js --output=./tmp/ --hot --open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas-sketch": "^0.7.3",
+    "canvas-sketch-cli": "^1.11.9"
+  }
+}
