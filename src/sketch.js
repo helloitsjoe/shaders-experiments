@@ -9,9 +9,9 @@ const settings = {
 };
 
 const sketch = () => {
-  return ({ context, width, height }) => {
-    context.fillStyle = 'white';
-    context.fillRect(0, 0, width, height);
+  return ({ context: ctx, width, height }) => {
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, width, height);
 
     const shrinkPctX = (width - MARGIN_X * 2) / width;
     const shrinkPctY = (height - MARGIN_Y * 2) / height;
@@ -29,15 +29,18 @@ const sketch = () => {
 
         // context.lineWidth = 3;
         // context.strokeStyle = 'black';
-        context.font = '18px Arial';
-        context.fillStyle = 'black';
-        context.fillText('-', normalX, normalY);
-        // context.translate(normalX, normalY);
-        context.rotate(Math.abs(size));
-        // context.translate(-normalX, -normalY);
-        // context.beginPath();
-        // context.arc(normalX, normalY, size, 0, 2 * Math.PI);
-        // context.stroke();
+        ctx.save();
+        ctx.translate(normalX, normalY);
+        ctx.rotate(size);
+        ctx.translate(-normalX, -normalY);
+
+        ctx.font = '18px Arial';
+        ctx.fillStyle = 'black';
+        ctx.fillText('I', normalX, normalY);
+        ctx.restore();
+        // ctx.beginPath();
+        // ctx.arc(normalX, normalY, size, 0, 2 * Math.PI);
+        // ctx.stroke();
       }
     }
   };
