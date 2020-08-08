@@ -24,17 +24,17 @@ const sketch = () => {
         const normalX = spaceX * x * width + MARGIN_X;
         const normalY = spaceY * y * width + MARGIN_Y;
 
-        const size = Math.random() * 10;
+        const size = Math.random();
         // const size = 10;
 
         // context.lineWidth = 3;
         // context.strokeStyle = 'black';
         context.font = '18px Arial';
         context.fillStyle = 'black';
-        context.fillText('=', normalX, normalY);
-        context.translate(normalX, normalY);
-        context.rotate(Math.PI / size);
-        context.translate(-normalX, -normalY);
+        context.fillText('-', normalX, normalY);
+        // context.translate(normalX, normalY);
+        context.rotate(Math.abs(size));
+        // context.translate(-normalX, -normalY);
         // context.beginPath();
         // context.arc(normalX, normalY, size, 0, 2 * Math.PI);
         // context.stroke();
