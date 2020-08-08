@@ -15,7 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "canvas-sketch": "^0.7.3",
-    "canvas-sketch-cli": "^1.11.9"
+    "canvas-sketch-cli": "^1.11.9",
+    "canvas-sketch-util": "^1.10.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

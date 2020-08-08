@@ -1,4 +1,5 @@
 const canvasSketch = require('canvas-sketch');
+const random = require('canvas-sketch-util/random');
 
 const GRID_SIZE = 40;
 const MARGIN_X = 70;
@@ -24,7 +25,7 @@ const sketch = () => {
         const normalX = spaceX * x * width + MARGIN_X;
         const normalY = spaceY * y * width + MARGIN_Y;
 
-        const size = Math.random();
+        const size = random.noise2D(normalX, normalY, 0.004, 1);
         // const size = 10;
 
         // context.lineWidth = 3;
@@ -34,9 +35,9 @@ const sketch = () => {
         ctx.rotate(size);
         ctx.translate(-normalX, -normalY);
 
-        ctx.font = '18px Arial';
+        ctx.font = `${20 + size * 3}px Arial`;
         ctx.fillStyle = 'black';
-        ctx.fillText('I', normalX, normalY);
+        ctx.fillText('=', normalX, normalY);
         ctx.restore();
         // ctx.beginPath();
         // ctx.arc(normalX, normalY, size, 0, 2 * Math.PI);
