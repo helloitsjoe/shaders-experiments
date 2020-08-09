@@ -2,17 +2,23 @@ const canvasSketch = require('canvas-sketch');
 const random = require('canvas-sketch-util/random');
 const palettes = require('nice-color-palettes');
 
-const GRID_SIZE = 40;
-const MARGIN_X = 70;
-const MARGIN_Y = 70;
+const GRID_SIZE = 20;
+const MARGIN_X = 200;
+const MARGIN_Y = 200;
 
 const settings = {
-  dimensions: [512, 512],
+  // fps: 5,
+  dimensions: [2048, 2048],
+  // animate: true,
 };
 
+const colors = random.pick(palettes);
+
+const color = colors[1];
+
 const sketch = () => {
-  return ({ context: ctx, width, height }) => {
-    ctx.fillStyle = 'white';
+  return ({ context: ctx, width, height, frame }) => {
+    ctx.fillStyle = random.pick(colors.slice(4, 5));
     ctx.fillRect(0, 0, width, height);
 
     const shrinkPctX = (width - MARGIN_X * 2) / width;
@@ -21,29 +27,47 @@ const sketch = () => {
     const spaceX = (1 / (GRID_SIZE - 1)) * shrinkPctX;
     const spaceY = (1 / (GRID_SIZE - 1)) * shrinkPctY;
 
-    const colors = random.pick(palettes);
-
     for (let y = 0; y < GRID_SIZE; y++) {
       for (let x = 0; x < GRID_SIZE; x++) {
         const normalX = spaceX * x * width + MARGIN_X;
         const normalY = spaceY * y * width + MARGIN_Y;
 
-        const size = random.noise2D(normalX, normalY, 0.005, 1);
+        const noiseVal = random.noise3D(
+          // normalX * Math.sin(time),
+          // normalY * Math.cos(time),
+          normalX,
+          normalY,
+          frame * 20,
+          0.0005
+        );
+
+        ctx.save();
+        ctx.translate(normalX, normalY);
+        ctx.rotate(noiseVal);
+        ctx.translate(-normalX, -normalY);
+
+        // ctx.font = `${70}px Arial`;
+        ctx.font = `${150 + noiseVal * 150}px Arial`;
+
+        // // const color = random.pick(colors.slice(0, 3));
+
+        ctx.fillStyle = color;
+        // ctx.fillStyle = random.pick(colors);
+        ctx.fillText('+', normalX, normalY);
+        ctx.restore();
 
         // context.lineWidth = 3;
         // context.strokeStyle = 'black';
-        ctx.save();
-        ctx.translate(normalX, normalY);
-        ctx.rotate(size);
-        ctx.translate(-normalX, -normalY);
 
-        ctx.font = `${20 + size * 4}px Arial`;
-        ctx.fillStyle = random.pick(colors);
-        ctx.fillText('I', normalX, normalY);
-        ctx.restore();
+        // ctx.lineWidth = 3;
+        // const size = 0.4;
+
+        // ctx.strokeStyle = color;
+        // ctx.fillStyle = `rgba(0,0,0,${noiseVal})`;
         // ctx.beginPath();
-        // ctx.arc(normalX, normalY, size, 0, 2 * Math.PI);
-        // ctx.stroke();
+        // ctx.arc(normalX, normalY, 150 + noiseVal * 100, 0, 2 * Math.PI);
+        // // ctx.stroke();
+        // ctx.fill();
       }
     }
   };
